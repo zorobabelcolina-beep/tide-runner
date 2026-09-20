@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#061b2e" />
+  <title>Tide Runner — Race. Align. Predict. Master the Tides.</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="app">
+    <canvas id="gameCanvas" aria-label="Tide Runner game canvas"></canvas>
+
+    <section id="menuScreen" class="screen active">
+      <div class="menu-overlay"></div>
+      <div class="menu-content">
+        <div class="brand-mark">🌊</div>
+        <p class="eyebrow">GRADE 8 • EARTH & SPACE SCIENCE</p>
+        <h1>TIDE <span>RUNNER</span></h1>
+        <p class="tagline">Race. Align. Predict. Master the Tides.</p>
+        <div class="menu-buttons">
+          <button class="primary" data-action="start">▶ START GAME</button>
+          <button data-action="tutorial">❓ HOW TO PLAY</button>
+          <button data-action="objective">📚 LEARNING OBJECTIVE</button>
+          <button data-action="progress">🏆 MY PROGRESS</button>
+          <button data-action="lab">🔬 TIDE LAB</button>
+          <button data-action="settings">⚙ SETTINGS</button>
+        </div>
+        <div class="mini-tip">Your goal is not only to survive the run — understand why tidal conditions change.</div>
+      </div>
+    </section>
+
+    <section id="tutorialScreen" class="screen panel-screen">
+      <div class="panel">
+        <button class="close" data-action="menu">×</button>
+        <p class="eyebrow">YOUR FIRST RUN</p>
+        <h2>HOW TO PLAY</h2>
+        <div class="tutorial-grid">
+          <article><div class="step-icon">🏃</div><h3>RUN</h3><p>Move through three lanes, jump obstacles, and collect shells.</p></article>
+          <article><div class="step-icon">👀</div><h3>OBSERVE</h3><p>At science checkpoints, inspect the positions of the Sun, Earth, and Moon.</p></article>
+          <article><div class="step-icon">🧠</div><h3>DECIDE</h3><p>Identify the tidal condition or arrange the bodies to match a situation.</p></article>
+          <article><div class="step-icon">👑</div><h3>MASTER</h3><p>Use feedback, build a combo, and reach the final tide.</p></article>
+        </div>
+        <div class="controls-box">
+          <h3>CONTROLS</h3>
+          <div class="control-row"><span>Desktop</span><b>← →</b> Move <b>↑ / Space</b> Jump <b>P</b> Pause</div>
+          <div class="control-row"><span>Mobile</span><b>◀</b> Left <b>⬆</b> Jump <b>▶</b> Right</div>
+        </div>
+        <p class="quote">“Your goal is not only to survive the run. Your goal is to understand why tidal conditions change.”</p>
+      </div>
+    </section>
+
+    <section id="objectiveScreen" class="screen panel-screen">
+      <div class="panel narrow">
+        <button class="close" data-action="menu">×</button>
+        <p class="eyebrow">SCIENCE MISSION</p>
+        <h2>WHAT WILL YOU LEARN?</h2>
+        <div class="orbit-card">
+          <div class="orbit-sun">☀️<small>SUN</small></div>
+          <div class="orbit-earth">🌎<small>EARTH</small></div>
+          <div class="orbit-moon">🌙<small>MOON</small></div>
+          <div class="orbit-arrow">↕</div>
+          <div class="orbit-tide">🌊<small>TIDES</small></div>
+        </div>
+        <p class="objective-copy">In this game, you will explore how the <strong>relative positions and movements of the Earth, Moon, and Sun</strong> are related to tides.</p>
+        <button class="primary" data-action="start">▶ TRY THE MISSION</button>
+      </div>
+    </section>
+
+    <section id="progressScreen" class="screen panel-screen">
+      <div class="panel">
+        <button class="close" data-action="menu">×</button>
+        <p class="eyebrow">YOUR JOURNEY</p>
+        <h2>MY PROGRESS</h2>
+        <div id="progressStats" class="stats-grid"></div>
+        <h3 class="section-title">ACHIEVEMENTS</h3>
+        <div id="achievementGrid" class="achievement-grid"></div>
+      </div>
+    </section>
+
+    <section id="settingsScreen" class="screen panel-screen">
+      <div class="panel narrow">
+        <button class="close" data-action="menu">×</button>
+        <p class="eyebrow">PREFERENCES</p>
+        <h2>SETTINGS</h2>
+        <label class="setting-row"><span>🔊 Sound</span><input id="soundToggle" type="checkbox" checked></label>
+        <label class="setting-row"><span>✨ Reduced motion</span><input id="motionToggle" type="checkbox"></label>
+        <button class="danger-outline" data-action="reset">Reset saved progress</button>
+      </div>
+    </section>
+
+    <section id="gameHUD" class="hud hidden">
+      <div class="hud-top">
+        <div class="hud-pill"><span>SCORE</span><b id="score">0</b></div>
+        <div class="hud-pill"><span>LEVEL</span><b id="level">1</b></div>
+        <div class="hud-pill lives"><span>LIVES</span><b id="lives">❤️❤️❤️</b></div>
+        <button class="pause-btn" data-action="pause">Ⅱ</button>
+      </div>
+      <div class="hud-bottom">
+        <div class="meter-wrap"><span>TIDE</span><div class="meter"><i id="tideMeter"></i></div></div>
+        <div class="science-wrap"><span>SCIENCE CHALLENGES</span><b id="scienceProgress">0 / 6</b></div>
+        <div id="comboBadge" class="combo"></div>
+      </div>
+    </section>
+
+    <section id="checkpointScreen" class="screen overlay-screen hidden">
+      <div class="challenge-panel">
+        <div class="checkpoint-head"><span>🌊 SCIENCE CHECKPOINT</span><b id="challengeTypeLabel">OBSERVE</b></div>
+        <div id="challengeBody"></div>
+      </div>
+    </section>
+
+    <section id="feedbackScreen" class="screen overlay-screen hidden">
+      <div id="feedbackPanel" class="feedback-panel"></div>
+    </section>
+
+    <section id="pauseScreen" class="screen overlay-screen hidden">
+      <div class="pause-panel">
+        <p class="eyebrow">RUN ON HOLD</p><h2>GAME PAUSED</h2>
+        <button class="primary" data-action="resume">▶ RESUME</button>
+        <button data-action="restart">🔄 RESTART</button>
+        <button data-action="menu">🏠 MAIN MENU</button>
+      </div>
+    </section>
+
+    <section id="levelScreen" class="screen overlay-screen hidden">
+      <div class="level-panel">
+        <div class="level-icon">⚡</div>
+        <p class="eyebrow">CHECKPOINT CLEARED</p>
+        <h2 id="levelTitle">LEVEL COMPLETE</h2>
+        <p id="levelMessage"></p>
+        <button class="primary" data-action="continue">▶ CONTINUE RUN</button>
+      </div>
+    </section>
+
+    <section id="winScreen" class="screen overlay-screen hidden">
+      <div class="result-panel win">
+        <div class="result-icon">👑</div>
+        <p class="eyebrow">FINAL TIDE COMPLETE</p>
+        <h2>TIDE MASTER!</h2>
+        <p>You successfully connected the relative positions and movements of the Earth, Moon, and Sun to tides.</p>
+        <div id="winStats" class="result-stats"></div>
+        <div class="result-actions">
+          <button class="primary" data-action="restart">PLAY AGAIN</button>
+          <button data-action="lab">VIEW TIDE LAB</button>
+          <button data-action="menu">MAIN MENU</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="loseScreen" class="screen overlay-screen hidden">
+      <div class="result-panel">
+        <div class="result-icon">🌊</div>
+        <p class="eyebrow">RUN ENDED</p>
+        <h2>THE TIDE CAUGHT YOU!</h2>
+        <p>Keep practicing. Review the Earth–Moon–Sun relationships and try again.</p>
+        <div id="loseStats" class="result-stats"></div>
+        <div id="reviewBox" class="review-box"></div>
+        <div class="result-actions">
+          <button class="primary" data-action="restart">TRY AGAIN</button>
+          <button data-action="lab">REVIEW SCIENCE</button>
+          <button data-action="menu">MAIN MENU</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="labScreen" class="screen panel-screen">
+      <div class="panel lab-panel">
+        <button class="close" data-action="menu">×</button>
+        <p class="eyebrow">EXPLORATION MODE</p>
+        <h2>🔬 TIDE LAB</h2>
+        <p class="lab-intro">Move the simplified model to explore how relative positions relate to tidal conditions.</p>
+        <div class="lab-layout">
+          <div class="lab-stage" id="labStage">
+            <div class="lab-orbit outer"></div>
+            <div class="lab-orbit inner"></div>
+            <div class="lab-body sun" id="labSun" draggable="true">☀️</div>
+            <div class="lab-body earth" id="labEarth">🌎</div>
+            <div class="lab-body moon" id="labMoon" draggable="true">🌙</div>
+          </div>
+          <div class="lab-info">
+            <div class="condition-card"><span>CURRENT CONDITION</span><strong id="labCondition">SPRING TIDE</strong><small id="labReason">Bodies are aligned in this simplified model.</small></div>
+            <div class="range-card"><span>TIDAL RANGE</span><div class="range-bars" id="labBars"></div></div>
+            <div class="lab-buttons">
+              <button data-lab="spring">☀️ — 🌎 — 🌙 Spring</button>
+              <button data-lab="neap">☀️ ⟂ 🌎 ⟂ 🌙 Neap</button>
+              <button data-lab="earthMoon">🌎 — 🌙 Earth–Moon</button>
+            </div>
+          </div>
+        </div>
+        <p class="model-note">Simplified model: real tides are influenced by the gravitational effects of the Moon and Sun, Earth's rotation, coastline shape, and ocean-basin conditions.</p>
+      </div>
+    </section>
+
+    <div id="mobileControls" class="mobile-controls hidden">
+      <button data-control="left">◀</button>
+      <button data-control="jump">⬆</button>
+      <button data-control="right">▶</button>
+    </div>
+
+    <div id="toast" class="toast"></div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
