@@ -346,7 +346,16 @@ function resumeGame(){
   if(state!=="PAUSED")return;state="RUNNING";showScreen("menuScreen");screens.forEach(s=>s.classList.remove("active"));$("gameHUD").classList.remove("hidden");$("mobileControls").classList.toggle("hidden",!isMobile());
 }
 function restart(){hideOverlays();startGame()}
-function menu(){state="MENU";hideOverlays();$("gameHUD").classList.add("hidden");$("mobileControls").classList.add("hidden");showScreen("menuScreen");drawMenu()}
+function menu(){
+  state="MENU";
+  game=null;
+  currentQuestion=null;
+  hideOverlays();
+  $("gameHUD").classList.add("hidden");
+  $("mobileControls").classList.add("hidden");
+  showScreen("menuScreen");
+  drawMenu();
+}
 function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),1800)}
 function renderProgress(){
   const unlocked=save.achievements;
@@ -473,5 +482,28 @@ function updateLabFromPositions(){
   else if(Math.abs(deg-90)<28){$("labCondition").textContent="NEAP TIDE";$("labReason").textContent="The simplified model is close to a right-angle arrangement.";setBars(5)}
   else{$("labCondition").textContent="TRANSITION";$("labReason").textContent="The arrangement is between the simplified spring and neap examples.";setBars(7)}
 }
+// --- BOOT SAFETY ---
+// Always open the website at the TIDE RUNNER main menu.
+// This also prevents a browser/bfcache/hash restoration from reopening Tide Lab.
+function bootTideRunner(){
+  state = "MENU";
+  game = null;
+  currentQuestion = null;
+  labDrag = null;
+  hideOverlays();
+  showScreen("menuScreen");
+  $("gameHUD").classList.add("hidden");
+  $("mobileControls").classList.add("hidden");
+  drawMenu();
+}
+
+// Clear any URL hash that could represent an old/restored navigation state.
+if (location.hash) {
+  try { history.replaceState(null, "", location.pathname + location.search); } catch {}
+}
+
 renderLab("spring");
-drawMenu();
+bootTideRunner();
+addEventListener("pageshow", () => {
+  if (state !== "RUNNING" && state !== "PAUSED") bootTideRunner();
+});

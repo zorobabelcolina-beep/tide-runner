@@ -1,3 +1,7 @@
+# TIDE RUNNER — Fixed startup build
+
+This build includes a startup safeguard that always opens the game at the main TIDE RUNNER menu instead of Tide Lab.
+
 # TIDE RUNNER
 
 A self-contained Grade 8 Earth & Space Science educational endless runner.
