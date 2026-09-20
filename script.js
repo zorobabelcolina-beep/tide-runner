@@ -88,12 +88,15 @@ function hideOverlays(){
   ["checkpointScreen","feedbackScreen","pauseScreen","levelScreen","winScreen","loseScreen"].forEach(id=>$(id).classList.add("hidden"));
 }
 function showScreen(id){
-  screens.forEach(s=>$(s).classList.toggle("active",s===id));
-  ["checkpointScreen","feedbackScreen","pauseScreen","levelScreen","winScreen","loseScreen"].forEach(s=>{
-    if(id===s) $(s).classList.remove("hidden");
-    else if(s!==id) $(s).classList.add("hidden");
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
   });
-  $("gameHUD").classList.toggle("hidden",!["RUNNING","PAUSED"].includes(state));
+
+  const screen = $(id);
+
+  if(screen){
+    screen.classList.add("active");
+  }
 }
 function startGame(){
   initGame();
