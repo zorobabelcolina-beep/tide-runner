@@ -14,7 +14,8 @@ button.primary{background:linear-gradient(135deg,#11b7c8,#1576dc);border-color:t
 button.danger-outline{border-color:rgba(255,111,115,.45);color:#ffb5b8;background:rgba(80,15,25,.35)}
 #app{position:relative;width:100%;height:100%;overflow:hidden}
 #gameCanvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.screen{position:absolute;inset:0;z-index:10}
+.screen{position:absolute;inset:0;z-index:10;display:none}
+.screen.active{display:block}
 .screen.hidden,.hud.hidden,.mobile-controls.hidden{display:none}
 .menu-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,15,27,.84) 0%,rgba(2,15,27,.48) 45%,rgba(2,15,27,.18) 100%)}
 .menu-content{position:absolute;left:7vw;top:50%;transform:translateY(-50%);max-width:560px}
