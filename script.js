@@ -502,8 +502,8 @@ if (location.hash) {
   try { history.replaceState(null, "", location.pathname + location.search); } catch {}
 }
 
-renderLab("spring");
 bootTideRunner();
+
 addEventListener("pageshow", () => {
   if (state !== "RUNNING" && state !== "PAUSED") bootTideRunner();
 });
