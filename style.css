@@ -14,8 +14,7 @@ button.primary{background:linear-gradient(135deg,#11b7c8,#1576dc);border-color:t
 button.danger-outline{border-color:rgba(255,111,115,.45);color:#ffb5b8;background:rgba(80,15,25,.35)}
 #app{position:relative;width:100%;height:100%;overflow:hidden}
 #gameCanvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.screen{position:absolute;inset:0;z-index:10;display:none}
-.screen.active{display:block}
+.screen{position:absolute;inset:0;z-index:10}
 .screen.hidden,.hud.hidden,.mobile-controls.hidden{display:none}
 .menu-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,15,27,.84) 0%,rgba(2,15,27,.48) 45%,rgba(2,15,27,.18) 100%)}
 .menu-content{position:absolute;left:7vw;top:50%;transform:translateY(-50%);max-width:560px}
@@ -75,3 +74,11 @@ h3{margin:8px 0;font-size:16px}
 body.reduced *{animation-duration:.01ms!important;transition-duration:.01ms!important}
 @media (max-width:850px){.tutorial-grid{grid-template-columns:repeat(2,1fr)}.achievement-grid{grid-template-columns:repeat(3,1fr)}.lab-layout{grid-template-columns:1fr}.lab-stage{height:300px}.stats-grid,.result-stats{grid-template-columns:repeat(2,1fr)}.menu-content{left:5vw;right:5vw}.menu-buttons{max-width:100%;grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.panel{padding:25px 18px}.menu-buttons{grid-template-columns:1fr}.menu-buttons button:first-child{grid-column:auto}.hud{padding:8px}.hud-pill{padding:6px 8px}.hud-pill span{font-size:7px}.hud-pill b{font-size:14px}.hud-bottom{left:8px;right:8px;bottom:7px}.meter-wrap{width:38vw}.science-wrap{font-size:10px}.science-wrap span{font-size:7px}.challenge-panel,.feedback-panel,.pause-panel,.level-panel,.result-panel{padding:22px}.choice-grid{grid-template-columns:1fr}.challenge-diagram{gap:22px;font-size:42px}.arrange-zone{gap:6px}.drop-slot{width:78px;height:78px}.drag-item{font-size:35px}.lab-stage{height:270px}.lab-orbit.outer{width:220px;height:220px}.lab-orbit.inner{width:130px;height:130px}.lab-body{font-size:38px}.lab-body.sun{left:14%}.lab-body.moon{left:86%}}
+
+
+/* FINAL STARTUP SAFETY */
+.screen { display:none; }
+.screen.active { display:block; }
+#menuScreen.active { display:block !important; }
+#labScreen { display:none !important; }
+#labScreen.active { display:block !important; }
