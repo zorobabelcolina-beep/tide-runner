@@ -79,6 +79,14 @@ body.reduced *{animation-duration:.01ms!important;transition-duration:.01ms!impo
 /* FINAL STARTUP SAFETY */
 .screen { display:none; }
 .screen.active { display:block; }
-#menuScreen.active { display:block !important; }
-#labScreen { display:none !important; }
-#labScreen.active { display:block !important; }
+
+/* SCREEN CONTROL */
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+                
